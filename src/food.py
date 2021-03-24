@@ -6,7 +6,7 @@ from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodEx
 def foodInput(path):
     while True:
         print("식품명, 양, 유통기한(YYYYMMDD)를 공백을 기준으로 입력하세요.")
-        string = input()
+        string = input("입력 > ")
         input_string = string.split()
         if inputFoodName(input_string[0]) and checkListNum(input_string,3) and inputFoodAmount(input_string[1]) and inputFoodExpiration(input_string[2]):
             while True:
@@ -28,7 +28,7 @@ def foodOutput(path):
     food_file = ""
     while True:
         print("식품명, 양을 공백을 기준으로 입력하세요.")
-        string = input()
+        string = input("입력 > ")
         input_string = string.split()
         if inputFoodName(input_string[0]) and checkListNum(input_string,2) and inputFoodAmount(input_string[1]):
             food_name = input_string[0]
