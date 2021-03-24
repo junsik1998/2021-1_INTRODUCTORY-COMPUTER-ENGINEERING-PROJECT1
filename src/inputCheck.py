@@ -97,7 +97,6 @@ def inputFoodAmount(input_text):
         else:
             print("양 입력시 단위(mL,L,g,kg,인분)가 있는 정수로 입력해주세요.")
     except:
-        print("except")
         print("양 입력시 단위(mL,L,g,kg,인분)가 있는 정수로 입력해주세요.")
 
 def inputFoodExpiration(num):
