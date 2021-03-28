@@ -51,9 +51,9 @@ if __name__ == "__main__":
             print("프로그램 종료")
             break
         if menu == 1:
-            foodInput()
+            foodInput(refrigerator)
         if menu == 2:
-            foodOutput()
+            foodOutput(refrigerator)
         if menu == 3:
             searchFood()
         if menu == 4:
