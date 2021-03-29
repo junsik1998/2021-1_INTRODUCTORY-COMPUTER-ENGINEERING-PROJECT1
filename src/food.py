@@ -10,7 +10,7 @@ def foodInput(path):
         input_string = string.split()
         if inputFoodName(input_string[0]) and checkListNum(input_string,3) and inputFoodAmount(input_string[1]) and inputFoodExpiration(input_string[2]):
             while True:
-                title = time.strftime('%Y%m%d%I%M%S',time.localtime())
+                title = time.strftime('%Y%m%d%H%M%S',time.localtime())
                 if os.path.isfile("./refrigerator/"+path+"/"+title+".txt") == True:
                     time.sleep(1)
                 else:
