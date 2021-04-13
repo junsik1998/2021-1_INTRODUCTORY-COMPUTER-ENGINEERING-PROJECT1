@@ -5,12 +5,12 @@ from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodEx
 
 def foodInput(path):
     while True:
-        print("식품명, 양, 유통기한(YYYYMMDD)를 공백을 기준으로 입력하세요.")
+        print("식품명, 식품의 양, 식품의 유통기한(YYYYMMDD)을 공백을 기준으로 입력하세요.")
         string = input("입력 > ")
         input_string = string.split()
         if inputFoodName(input_string[0]) and checkListNum(input_string,3) and inputFoodAmount(input_string[1]) and inputFoodExpiration(input_string[2]):
             while True:
-                title = time.strftime('%Y%m%d%H%M%S',time.localtime())
+                title = time.strftime('%Y%m%d%I%M%S',time.localtime())
                 if os.path.isfile("./refrigerator/"+path+"/"+title+".txt") == True:
                     time.sleep(1)
                 else:
@@ -54,10 +54,10 @@ def foodOutput(path):
                 f = open("./refrigerator/"+path+"/"+food_file,'w',encoding='utf-8')
                 f.write(new_line)
                 f.close()
-                print(food_name+"을 "+str(amount[1])+"만큼 출고하여 "+str(amount[0])+"만큼 남음")
+                print(food_name+"을(를) "+str(amount[1])+str(amount[2])+" 만큼 출고하여 "+str(amount[0])+amount[2]+" 만큼 남음")
             elif amount[0] == amount[1]:
                 os.remove("./refrigerator/"+path+"/"+food_file)
-                print(food_name+"전부 출고 완료")
+                print(food_name+"을(를) 전부 출고 완료")
             else:
                 print(food_name+"의 최대 출고 가능한 양은 "+str(amount[0])+amount[2]+" 입니다.")
 
