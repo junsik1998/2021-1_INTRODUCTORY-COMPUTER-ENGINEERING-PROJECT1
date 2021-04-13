@@ -103,18 +103,17 @@ def inputFoodExpiration(num):
     res = re.search('[^0-9]', num)
     if res == None and len(num) == 8:
         now = time.strftime('%Y%m%d',time.localtime())
-        if int(now) <= int(num):
-            year = int(num[:4])
-            month = int(num[4:6])
-            day = int(num[6:])
-            try:
-                datetime(year, month, day)
+        year = int(num[:4])
+        month = int(num[4:6])
+        day = int(num[6:])
+        try:
+            datetime(year, month, day)
+            if int(now) <= int(num):
                 return True
-            except:
-                print("해당 날짜는 유효하지 않는 날짜 입니다. 확인 후 다시 입력해주세요.")
-                return False
-        else:
-            print("유통기한은 오늘 날짜 기준 오늘 또는 다음 날짜를 입력해주세요.")
+            else:
+                 print("유통기한은 오늘 날짜 기준 오늘 또는 다음 날짜를 입력해주세요.")
+        except:
+            print("해당 날짜는 유효하지 않는 날짜 입니다. 확인 후 다시 입력해주세요.")
             return False
     else:
         print("유통기한은 8자리 정수로만 입력해주세요.")
