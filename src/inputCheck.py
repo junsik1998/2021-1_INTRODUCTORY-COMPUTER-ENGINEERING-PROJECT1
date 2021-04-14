@@ -41,7 +41,7 @@ def inputFoodName(input_text):
             print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
             return False
         else:
-            print("식품명은 한글, 영문 대소문자, 숫자, 밑줄 문자(_), 괄호 문자만 입력 가능합니다.")
+            print("식품명은 한글, 영문 대소문자, 숫자, 밑줄 문자(_), 괄호 문자 ')','(' 만 입력 가능합니다.")
             return False
 
 def checkListNum(list,num):
@@ -56,10 +56,10 @@ def inputInt2(number,start,end,text):
         if start <= number <= end:
             return True
         else:
-            print(text+f"{start}이상 {end}이하의 "+text+"정수로 입력해 주세요.")
+            print(text+f"{start}이상 {end}이하의 정수로 입력해 주세요.")
             return False
     except ValueError:
-        print(text+"정수만 입력해 주세요.")
+        print(text+"정수로 입력해 주세요.")
         return False
 
 def inputFoodAmount(input_text):
@@ -111,43 +111,47 @@ def inputFoodExpiration(num):
             if int(now) <= int(num):
                 return True
             else:
-                 print("유통기한은 오늘 날짜 기준 오늘 또는 다음 날짜를 입력해주세요.")
+                 print("식품의 유통기한은 오늘 날짜 기준 오늘 또는 다음 날짜를 입력해주세요.")
         except:
             print("해당 날짜는 유효하지 않는 날짜 입니다. 확인 후 다시 입력해주세요.")
             return False
     else:
-        print("유통기한은 8자리 정수로만 입력해주세요.")
+        print("식품의 유통기한은 8자리 정수로만 입력해주세요.")
         return False
 
 def matchFoodAmount(foodIn,foodOut):
-    if re.compile('mL$').search(foodIn) and re.compile('mL$').search(foodOut):
-        foodIn = int(foodIn.replace('mL',''))
-        foodOut = int(foodOut.replace('mL',''))
-        return [foodIn,foodOut,"mL"]
-    elif re.compile('kg$').search(foodIn) and re.compile('kg$').search(foodOut):
-        foodIn = int(foodIn.replace('kg',''))
-        foodOut = int(foodOut.replace('kg',''))
-        return [foodIn,foodOut,"kg"]
-    elif re.compile('kg$').search(foodIn) and re.compile('g$').search(foodOut):
-        foodIn = int(foodIn.replace('kg',''))*1000
-        foodOut = int(foodOut.replace('g',''))
-        return [foodIn,foodOut,"g"]
-    elif re.compile('g$').search(foodIn) and  re.compile('g$').search(foodOut):
-        foodIn = int(foodIn.replace('g',''))
-        foodOut = int(foodOut.replace('g',''))
-        return [foodIn,foodOut,"g"]
-    elif re.compile('L$').search(foodIn) and re.compile('mL$').search(foodOut):
-        foodIn = int(foodIn.replace('L',''))*1000
-        foodOut = int(foodOut.replace('mL',''))
-        return [foodIn,foodOut,"mL"]
-    elif re.compile('L$').search(foodIn) and re.compile('L$').search(foodOut):
-        foodIn = int(foodIn.replace('L',''))
-        foodOut = int(foodOut.replace('L',''))
-        return [foodIn,foodOut,"L"]
-    elif re.compile('인분$').search(foodIn) and re.compile('인분$').search(foodOut):
-        foodIn = int(foodIn.replace('인분',''))
-        foodOut = int(foodOut.replace('인분',''))
-        return [foodIn,foodOut,"인분"]
-    else:
+    try:
+        if re.compile('mL$').search(foodIn) and re.compile('mL$').search(foodOut):
+            foodIn = int(foodIn.replace('mL',''))
+            foodOut = int(foodOut.replace('mL',''))
+            return [foodIn,foodOut,"mL"]
+        elif re.compile('kg$').search(foodIn) and re.compile('kg$').search(foodOut):
+            foodIn = int(foodIn.replace('kg',''))
+            foodOut = int(foodOut.replace('kg',''))
+            return [foodIn,foodOut,"kg"]
+        elif re.compile('kg$').search(foodIn) and re.compile('g$').search(foodOut):
+            foodIn = int(foodIn.replace('kg',''))*1000
+            foodOut = int(foodOut.replace('g',''))
+            return [foodIn,foodOut,"g"]
+        elif re.compile('g$').search(foodIn) and  re.compile('g$').search(foodOut):
+            foodIn = int(foodIn.replace('g',''))
+            foodOut = int(foodOut.replace('g',''))
+            return [foodIn,foodOut,"g"]
+        elif re.compile('L$').search(foodIn) and re.compile('mL$').search(foodOut):
+            foodIn = int(foodIn.replace('L',''))*1000
+            foodOut = int(foodOut.replace('mL',''))
+            return [foodIn,foodOut,"mL"]
+        elif re.compile('L$').search(foodIn) and re.compile('L$').search(foodOut):
+            foodIn = int(foodIn.replace('L',''))
+            foodOut = int(foodOut.replace('L',''))
+            return [foodIn,foodOut,"L"]
+        elif re.compile('인분$').search(foodIn) and re.compile('인분$').search(foodOut):
+            foodIn = int(foodIn.replace('인분',''))
+            foodOut = int(foodOut.replace('인분',''))
+            return [foodIn,foodOut,"인분"]
+        else:
+            print("식품의 양은 출고될 양과 같은 단위(mL,L,g,kg,인분)가 있는 정수로 입력해주세요.")
+            return False
+    except:
         print("식품의 양은 출고될 양과 같은 단위(mL,L,g,kg,인분)가 있는 정수로 입력해주세요.")
         return False
