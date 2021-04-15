@@ -2,6 +2,8 @@ import time
 import string
 import os
 from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, matchFoodAmount
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 def foodInput(path):
     print("식품명, 식품의 양, 식품의 유통기한(YYYYMMDD)을 공백을 기준으로 입력하세요.")
@@ -73,4 +75,43 @@ def foodOutput(path):
 
 
 def lessExpirationDate():
-    print("유통기한 적게 남은 식품 확인을 위한 함수")
+    #print("유통기한 적게 남은 식품 확인을 위한 함수")
+    now = datetime.now()
+    ex_date = get_date(now)
+    now_date = int(now.strftime('%Y%m%d'))
+    if ex_date >= now_date:
+        takingExpiration(ex_date)
+    else:
+        print("이미 유통기한이 지난 식품은 확인할 수 없습니다")
+        
+        
+#유통기한 입력받는 함수        
+def get_date(now):
+    while(True):
+        print("================")
+        date = input("유통기한이 입력하신 날짜 또는 기간 이내로 남은 식품 목록을 출력해 드리기 위해서,YYYYMMDD형식의 날짜 또는 양의 정수와 기간의 단위(일, 월, 년)의 결합으로 이루어진 기간을 입력해주세요.\n\n입력 >")
+        if isinstance(date, int):
+            if len(date == 8):
+                return date
+            else:
+                print("입력형식에 맞지 않습니다.")
+                continue;
+        elif isinstance(date, string):
+            n = len(date)
+            num = int(date[0:n-1])
+            kind = date[n-1:n]
+            if kind == "일":
+                wanted_date = now + timedelta(days=num)
+            elif kind == "월":
+                wanted_date = now + relativedelta(months=num)
+            elif kind == "년":
+                wanted_date = now + relativedelta(years=num)
+            else:
+                print("입력형식에 맞지 않습니다.")
+                continue
+            wanted_date.strftime('%Y%m%d')
+            return int(wanted_date)
+        
+        
+#유통기한 검사해서 가져오는 함수        
+def takingExpiration(wedate):
