@@ -155,3 +155,49 @@ def matchFoodAmount(foodIn,foodOut):
     except:
         print("식품의 양은 출고될 양과 같은 단위(mL,L,g,kg,인분)가 있는 정수로 입력해주세요.")
         return False
+    
+    
+def inputRecipeName():
+    while True:
+        input_text = input("요리 이름 > ")
+        check_text = ''
+        find_text = re.findall(r'[가-힣a-z0-9_]+', input_text)
+        for temp in find_text:
+            check_text += temp
+        if input_text == check_text and len(input_text) >= 1 and len(input_text) <= 20:
+            return check_text
+        else:
+            if len(input_text) < 1 or len(input_text) > 30:
+                print("1글자 이상 30글자 이하로 입력해주세요.")
+            else:
+                print("한글, 영문 소문자, 숫자, 밑줄 문자(_)만 입력 가능합니다.")
+    
+def inputFoodNote():
+    while True:
+        input_text = input("식품명, 메모 > ")
+            try:
+                if input_text == '':
+                    return 0
+                input_string = input_text.split()
+                food_name = input_string[0]
+                note = input_string[1]
+                check_text1 = ''
+                check_text2 = ''
+                find_text1 = re.findall(r'[가-힣a-z0-9_]+', food_name)
+                find_text2 = re.findall(r'[가-힣a-z0-9_]+', note)
+                for temp1 in find_text1:
+                    check_text1 += temp1
+                if food_name == check_text1 and len(food_name) >= 1 and len(food_name) <= 20:
+                    for temp2 in find_text2:
+                        check_text2 += temp2
+                    if note == check_text2 and len(note) >= 1 and len(note) <= 20:
+                        return (check_text1+' '+check_text2)
+                    else:
+                        print("입력하신 값이 문법 형식에 맞지 않습니다.")
+       
+                else:
+                    print("입력하신 값이 문법 형식에 맞지 않습니다.")
+                
+            except: 
+                print("입력하신 값이 문법 형식에 맞지 않습니다.")
+        
