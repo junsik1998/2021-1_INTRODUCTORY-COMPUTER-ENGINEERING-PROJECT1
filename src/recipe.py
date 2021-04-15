@@ -1,13 +1,31 @@
 import os
 import re
 from menu import menuSelect, SEARCH_MENU_LIST
+from inputCheck import inputRecipeName, inputFoodNote
 
 #폴더 경로들 (상수 취급하여 코딩해 주세요.)
 REFRIGERATOR_PATH = "./refrigerator/"
 RECIPE_PATH = "./recipe/"
 
-def addRecipe():
-    print("요리 레시피 등록을 위한 함수")
+def addRecipe ():
+    current_recipe_list = os.listdir(RECIPE_PATH)
+    while True:
+        recipe = inputRecipeName()
+        if recipe in current_recipe_list:
+            print("이미 등록된 요리입니다.")
+        else:
+            break
+    f = open(RECIPE_PATH+recipe+'.txt', 'w')
+    print("요리에 필요한 재료들의 식품명과 메모의 쌍을 공백을 기준으로 식품명과 메모를 구분하여 한 쌍을 한 줄씩 입력해 주세요.")
+    print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
+    while True:
+        food_note = inputFoodNote()
+        if food_note == 0:
+            f.close()
+            return 0;
+        else:
+            f.write(food_note)
+
 
 
 def cooking(path):     
