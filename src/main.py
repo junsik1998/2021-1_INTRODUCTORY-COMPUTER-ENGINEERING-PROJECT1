@@ -55,9 +55,9 @@ if __name__ == "__main__":
         if menu == 2:
             foodOutput(refrigerator)
         if menu == 3:
-            searchFood()
+            searchFood(refrigerator)
         if menu == 4:
-            showALLFood()
+            showALLFood(refrigerator)
         if menu == 5:
             lessExpirationDate()
         if menu == 6:
