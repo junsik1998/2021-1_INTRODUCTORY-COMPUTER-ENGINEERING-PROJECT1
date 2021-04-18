@@ -6,8 +6,66 @@ from recipe import showRecipeList
 REFRIGERATOR_PATH = "./refrigerator/"
 RECIPE_PATH = "./recipe/"
 
-def searchFood():
-    print("식품 검색하기를 위한 함수")
+def searchFood(path):
+    food_list=["메인메뉴로 돌아가기"]
+    index_list=[]
+    print("검색할 식품명을 입력하세요.")
+    while True:
+        food_name=(input("입력> "))
+        if inputFoodName(food_name)==True:
+            break
+    file_list = os.listdir("./refrigerator/"+path)
+    file_list_txt = [file for file in file_list if file.endswith(".txt")]
+    for i in file_list_txt:
+        f = open("./refrigerator/"+path+"/"+i,'r',encoding='utf-8')
+        line = f.readline()
+        buf = line.split()
+        if stringCompare(food_name,buf[0])==True:
+            food_list.append(buf[0])
+            index_list.append(i)
+        f.close()
+    if len(food_list)==1:
+        print("검색 결과가 없습니다.")         
+        return
+
+    while(True):
+        menu=menuSelect("식품목록",food_list)
+        if(menu==0):
+            break
+        else:
+            while(True):
+                f = open("./refrigerator/"+path+"/"+index_list[menu-1],'r',encoding='utf-8')
+                line=f.readline()
+                print(line)
+                f.close()
+                submenu=menuSelect("수정 및 삭제 메뉴",['돌아가기','수정하기','삭제하기'])
+                if(submenu==0):                    
+                    break
+                if(submenu==1):
+                    while True:
+                        print("수정 값(양, 유통기한)")
+                        string = input("입력 > ")
+                        input_string = string.split()
+                        if  checkListNum(input_string,2) and inputFoodAmount(input_string[0]) and inputFoodExpiration(input_string[1]):
+                            while True:
+                                title = time.strftime('%Y%m%d%H%M%S',time.localtime())
+                                if os.path.isfile("./refrigerator/"+path+"/"+title+".txt") == True:
+                                    time.sleep(1)
+                                else:
+                                    break
+                            f = open("./refrigerator/"+path+"/"+index_list[menu-1], 'w',encoding='utf-8')
+                            f.write(food_list[menu]+' ')
+                            f.write(string)
+                            f.close()
+                            break
+                if(submenu==2):
+                    os.remove("./refrigerator/"+path+"/"+index_list[menu-1])
+                    food_list.pop(menu)
+                    index_list.pop(menu-1)
+                    print("삭제가 완료되었습니다.")
+                    break
+
+
 
 
 def searchRecipe():
