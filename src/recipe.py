@@ -1,6 +1,7 @@
 import os
 import re
 from menu import menuSelect, SEARCH_MENU_LIST
+from showList import showRecipeList
 from inputCheck import inputRecipeName, inputFoodNote
 
 #폴더 경로들 (상수 취급하여 코딩해 주세요.)
@@ -27,98 +28,85 @@ def addRecipe ():
             f.write(food_note)
 
 
-
 def cooking(path):     
-    possible_recipe_select_menu_list = ["메인 메뉴로"]
-    current_possible_recipe_list = []
-    current_recipe_list = os.listdir(RECIPE_PATH) #레시피 목록 가져오기
-    current_file_list_txt = [file for file in file_list if file.endswith(".txt")]
-    food_file_list = os.listdir("./refrigerator/"+path)
-    food_file_list_txt = [file for file in file_list if file.endswith(".txt")]
-    if(len(current_recipe_list_txt)==0 or len(food_file_list_txt)==0):
+    possible_recipe_select_menu_list = ["메인 메뉴로 돌아가기"]
+    possible_recipe_list = []
+    recipe_list = os.listdir(RECIPE_PATH) #레시피 목록 가져오기
+    recipe_list_txt = [file for file in current_recipe_list if file.endswith(".txt")]
+    food_file_list = os.listdir("./refrigerator/"+path) #식재로 목록 가져오기
+    food_file_list_txt = [file for file in food_file_list if file.endswith(".txt")]
+    if(len(recipe_list_txt)==0 or len(food_file_list_txt)==0):
         print("만들 수 있는 요리가 없습니다.")
         return
-    for i in current_file_list_txt:
+    for i in recipe_list_txt:
         f = open(RECIPE_PATH+i,'r',encoding='utf-8')
         lineList = f.readlines()
-        foodList = [0 for j in range(len(lineList))]    #요리에 필요한 식재료의 이름
-        amountList = [0 for j in range(len(lineList))]  #요리에 필요한 식재료의 양
-        checkList = [0 for j in range(len(lineList))]   #가지고 있는 식재료의 양 
+        foodList = [0 for j in range(len(lineList))]    #요리에 필요한 식재료의 이름 , 줄 수 만큼 0으로 초기화
+        checkList = [False for j in range(len(lineList))]   #식재료 체크 , 줄 수 만큼 false로 초기화
         f.close()
         for j in len(lineList):    
             buf = lineList[j].split()
-            foodList[j] = buf[0]
-            if re.compile('mL$').search(buf[1]): 
-                amountList[j]+= int(buf[1].replace('mL',''))
-            elif re.compile('kg$').search(buf[1]):  
-                amountList[j]+= (int(buf[1].replace('kg','')))*1000      
-            elif re.compile('g$').search(buf[1]):
-                amountList[j]+= int(buf[1].replace('g',''))
-            elif re.compile('L$').search(buf[1]):
-                amountList[j]+= (int(buf[1].replace('L','')))*1000
-            elif re.compile('인분$').search(buf[1]):
-                amountList[j]+= int(buf[1].replace('인분',''))
-            else :
-                print("오류: 혀용되지 않은 단위")
-                return False
+            foodList[j] = buf[0]                        #식재료 이름
+
         for j in food_file_list_txt:    #남아있는 식품 검사
             f=open(REFRIGERATOR_PATH+path+"/"+j,'r',encoding='utf-8')
             line = f.readline()
-            buf = line.split()          #buf[0]은 남아있는 식품명, buf[1]은 남아있는 식품량 
+            buf = line.split()          #buf[0]은 남아있는 식품명
             if(buf[0] in foodList):     #필요한 식품이 냉장고에 있다면
                 tmp = foodList.index(buf[0])    #buf[1] 의 단위
-                if re.compile('mL$').search(buf[1]): 
-                    checkList[tmp]+= int(buf[1].replace('mL',''))
-                elif re.compile('kg$').search(buf[1]):  
-                    checkList[tmp]+= (int(buf[1].replace('kg','')))*1000      
-                elif re.compile('g$').search(buf[1]):
-                    checkList[tmp]+= int(buf[1].replace('g',''))
-                elif re.compile('L$').search(buf[1]):
-                    checkList[tmp]+= (int(buf[1].replace('L','')))*1000
-                elif re.compile('인분$').search(buf[1]):
-                    checkList[tmp]+= int(buf[1].replace('인분',''))
-                else :
-                    print("오류: 혀용되지 않은 단위")
-                    return False
+                checkList[tmp]=True
             f.close()
         check=1
         for(j in range(len(checkList))):
-            if(checkList[j]<amountList[j]):
+            if(checkList[j]==False):
                 check*=0
                 break
         if(check==1):       #현재 가지고 있는 식품으로 만들 수 있을 경우
             recipe_name = i[:-4]
-            current_possible_recipe_list.append(recipe_name)
-    if(len(current_possible_recipe_list)==0):
+            possible_recipe_list.append(recipe_name)
+
+    if(len(possible_recipe_list)==0):
         print("만들 수 있는 요리가 없습니다.")
         return
-    possible_recipe_select_menu_list.extend(current_possible_recipe_list)
-    showRecipeList("만들 수 있는 요리목록",current_possible_recipe_list)
-    
+    possible_recipe_select_menu_list.extend(possible_recipe_list)
 
-def showRecipeList(menuName,recipe_list):
-    menu=menuSelect(menuName,recipe_list)
-    if menu==0:
-        return 0
+    while True:
+        recipeMenuNum = showRecipeList("만들 수 있는 요리목록",possible_recipe_select_menu_list)
+        if not recipeMenuNum:   # 0이면 메인메뉴로
+            break
+        while True:
+            recipeName_txt = showRecipeDetail(recipeMenuNum,possible_recipe_select_menu_list)    #상세정보 출력
+            menu1=menuSelect("수정 및 삭제 메뉴",SEARCH_MENU_LIST)
+            if menu1 == 0:
+                break
+            elif menu1 == 1:
+                editRecipe(recipeName_txt)
+            else:
+                removeRecipe(recipeName_txt)
+                tmp = recipeName_txt[:-4]               
+                possible_recipe_select_menu_list.remove(tmp)        #리스트에 반영
+                break
+                
+        
+        
+        
+
+def showRecipeDetail(menu,recipe_list): #상세정보출력 함수
     file_list = os.listdir(RECIPE_PATH)
     file_list_txt = [file for file in file_list if file.endswith(".txt")]
     for i in file_list_txt:
-        if(i==recipe_list[menu-1]+".txt"):
+        if(i==recipe_list[menu]+".txt"):
             f = open(RECIPE_PATH+i,'r',encoding='utf-8')
-            while True:
-                line=f.readline()
-                if not line:break;
+            lineList = f.readlines()
+            for line in lineList:
                 print(line)
             f.close()
-            menu1=menuSelect("메뉴",SEARCH_MENU_LIST)
-            if menu==0:
-                return 0
-            elif menu==1:
-                f = open(RECIPE_PATH+i,'w',encoding='utf-8')
-                ##################### 문서 수정 작성
-                return 0
-            else:
-                os.remove(RECIPE_PATH+i)
-                print("레시피 삭제됨")
-                return 0
-                
+            return i      
+
+    
+def removeRecipe(i):
+    os.remove(RECIPE_PATH+i)
+    print("레시피 삭제됨")
+
+def editRecipe(i):#작성필요
+    f = open(RECIPE_PATH+recipeName_txt,'w',encoding='utf-8')
