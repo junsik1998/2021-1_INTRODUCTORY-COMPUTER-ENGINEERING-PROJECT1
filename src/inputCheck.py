@@ -201,3 +201,27 @@ def inputFoodNote():
             except: 
                 print("입력하신 값이 문법 형식에 맞지 않습니다.")
         
+def inputConditionName(input_text1, input_text2):
+    if input_text1=='식품명' or input_text1=='식품생성날짜' or input_text1=='유통기한':
+        if input_text2=='오름차순' or input_text2=='내림차순':
+            return True
+        else:
+            print("정렬기준은 ‘식품명’, ‘식품생성날짜’, ‘유통기한’만 입력가능하고, 오름/내림차순 은 ‘오름차순’, ‘내림차순’만 입력 가능합니다.")
+            return False
+    else:
+        print("정렬기준은 ‘식품명’, ‘식품생성날짜’, ‘유통기한’만 입력가능하고, 오름/내림차순 은 ‘오름차순’, ‘내림차순’만 입력 가능합니다.")
+        return False
+   
+
+def stringCompare(str1,str2):
+    s1=''
+    s2=''
+    s1=str1.lower()
+    s2=str2.lower()
+    if s1==s2:
+        return True
+    else:
+        if s1 in s2:
+            return True
+        else:
+            return False
