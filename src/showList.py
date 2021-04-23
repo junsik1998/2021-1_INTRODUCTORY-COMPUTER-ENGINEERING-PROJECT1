@@ -1,4 +1,7 @@
-
+import os
+import time
+from menu import menuSelect
+from inputCheck import checkListNum, inputConditionName, inputFoodAmount, inputFoodExpiration
 
 def showFoodList():
     print("식품 목록을 출력하는 함수")
@@ -6,6 +9,7 @@ def showFoodList():
 
 def showRecipeList(menuName,recipe_list):
     menu=menuSelect(menuName,recipe_list)
+    return menu
 
 
 def showALLFood(path):

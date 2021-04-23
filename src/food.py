@@ -95,7 +95,7 @@ def get_date(now):
                 return date
             else:
                 print("입력형식에 맞지 않습니다.")
-                continue;
+                continue
         elif isinstance(date, string):
             n = len(date)
             num = int(date[0:n-1])
@@ -115,3 +115,4 @@ def get_date(now):
         
 #유통기한 검사해서 가져오는 함수        
 def takingExpiration(wedate):
+    pass

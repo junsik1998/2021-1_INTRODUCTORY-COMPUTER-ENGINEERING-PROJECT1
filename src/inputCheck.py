@@ -175,31 +175,31 @@ def inputRecipeName():
 def inputFoodNote():
     while True:
         input_text = input("식품명, 메모 > ")
-            try:
-                if input_text == '':
-                    return 0
-                input_string = input_text.split()
-                food_name = input_string[0]
-                note = input_string[1]
-                check_text1 = ''
-                check_text2 = ''
-                find_text1 = re.findall(r'[가-힣a-z0-9_]+', food_name)
-                find_text2 = re.findall(r'[가-힣a-z0-9_]+', note)
-                for temp1 in find_text1:
-                    check_text1 += temp1
-                if food_name == check_text1 and len(food_name) >= 1 and len(food_name) <= 20:
-                    for temp2 in find_text2:
-                        check_text2 += temp2
-                    if note == check_text2 and len(note) >= 1 and len(note) <= 20:
-                        return (check_text1+' '+check_text2)
-                    else:
-                        print("입력하신 값이 문법 형식에 맞지 않습니다.")
-       
+        try:
+            if input_text == '':
+                return 0
+            input_string = input_text.split()
+            food_name = input_string[0]
+            note = input_string[1]
+            check_text1 = ''
+            check_text2 = ''
+            find_text1 = re.findall(r'[가-힣a-z0-9_]+', food_name)
+            find_text2 = re.findall(r'[가-힣a-z0-9_]+', note)
+            for temp1 in find_text1:
+                check_text1 += temp1
+            if food_name == check_text1 and len(food_name) >= 1 and len(food_name) <= 20:
+                for temp2 in find_text2:
+                    check_text2 += temp2
+                if note == check_text2 and len(note) >= 1 and len(note) <= 20:
+                    return (check_text1+' '+check_text2)
                 else:
                     print("입력하신 값이 문법 형식에 맞지 않습니다.")
-                
-            except: 
+    
+            else:
                 print("입력하신 값이 문법 형식에 맞지 않습니다.")
+                
+        except: 
+            print("입력하신 값이 문법 형식에 맞지 않습니다.")
         
 def inputConditionName(input_text1, input_text2):
     if input_text1=='식품명' or input_text1=='식품생성날짜' or input_text1=='유통기한':

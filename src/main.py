@@ -65,7 +65,7 @@ if __name__ == "__main__":
         if menu == 7:
             searchRecipe()
         if menu == 8:
-            cooking()
+            cooking(refrigerator)
         if menu == 9:
             refrigerator = selectRefrigerator()
             print("변경된 냉장고: " + refrigerator)

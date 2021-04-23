@@ -23,7 +23,7 @@ def addRecipe ():
         food_note = inputFoodNote()
         if food_note == 0:
             f.close()
-            return 0;
+            return 0
         else:
             f.write(food_note)
 
@@ -32,7 +32,7 @@ def cooking(path):
     possible_recipe_select_menu_list = ["메인 메뉴로 돌아가기"]
     possible_recipe_list = []
     recipe_list = os.listdir(RECIPE_PATH) #레시피 목록 가져오기
-    recipe_list_txt = [file for file in current_recipe_list if file.endswith(".txt")]
+    recipe_list_txt = [file for file in recipe_list if file.endswith(".txt")]
     food_file_list = os.listdir("./refrigerator/"+path) #식재로 목록 가져오기
     food_file_list_txt = [file for file in food_file_list if file.endswith(".txt")]
     if(len(recipe_list_txt)==0 or len(food_file_list_txt)==0):
@@ -57,7 +57,7 @@ def cooking(path):
                 checkList[tmp]=True
             f.close()
         check=1
-        for(j in range(len(checkList))):
+        for j in range(len(checkList)):
             if(checkList[j]==False):
                 check*=0
                 break
@@ -109,4 +109,5 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):#작성필요
-    f = open(RECIPE_PATH+recipeName_txt,'w',encoding='utf-8')
+    pass
+    #f = open(RECIPE_PATH+recipeName_txt,'w',encoding='utf-8')   recipeName_txt라는 변수가 정의되지 않았습니다.
