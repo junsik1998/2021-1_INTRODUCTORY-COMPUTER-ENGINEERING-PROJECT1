@@ -1,8 +1,9 @@
 import os
 import time
 from inputCheck import inputRecipeName, inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, stringCompare
-from recipe import showRecipeList
+from recipe import showRecipeDetail, removeRecipe, editRecipe
 from menu import menuSelect
+from showList import showRecipeList
 
 #폴더 경로들 (상수 취급하여 코딩해 주세요.)
 REFRIGERATOR_PATH = "./refrigerator/"
@@ -83,4 +84,20 @@ def searchRecipe():
     if len(search_recipe_list) == 0:
         print("검색 결과가 없습니다.")
         return 0
-    showRecipeList("요리 레시피 목록", search_recipe_list)
+    
+    while True:
+        recipeMenuNum = showRecipeList("요리 레시피 목록",search_recipe_list)
+        if not recipeMenuNum:   # 0이면 메인메뉴로
+            break
+        while True:
+            recipeName_txt = showRecipeDetail(recipeMenuNum,search_recipe_list)    #상세정보 출력
+            menu1=menuSelect("수정 및 삭제 메뉴",SEARCH_MENU_LIST)
+            if menu1 == 0:
+                break
+            elif menu1 == 1:
+                editRecipe(recipeName_txt)
+            else:
+                removeRecipe(recipeName_txt)
+                tmp = recipeName_txt[:-4]               
+                possible_recipe_select_menu_list.remove(tmp)        #리스트에 반영
+                break
