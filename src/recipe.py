@@ -111,24 +111,31 @@ def removeRecipe(i):
 def editRecipe(i):
     file_list = os.listdir(RECIPE_PATH)
     file_list_txt = [file for file in file_list if file.endswith(".txt")]
-    for i in file_list_txt:
-        if(i==recipe_list[menu]+".txt"):
-            f = open(RECIPE_PATH+i,'r',encoding='utf-8')
-            lineList = f.readlines()
+    f = open(RECIPE_PATH+i,'r',encoding='utf-8')
+    lineList = f.readlines()
     print("수정 값(수정할 줄번호, 식품명, 메모)")
     print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
     while true:      
         input_text = input("입력>")
-        if (input_text == ''):
-            #삭제
         input_string = input_text.split()
-        if len(input_string) != 3:
+        if len(input_string) != 3 or len(input_string) != 1:
             print("공백을 기준으로 조건에 맞게 3가지 요소를 입력하세요.")
+        else if len(input_string) == 1:        #줄 번호만 입력: 해당 줄 삭제
+            line_number = input_string[0]
+            lineList[line_number-1] = ""
+            f.close()
+            f = open(RECIPE_PATH+i,'w')
+            for j in range(len(lineList)):
+                if lineList[j] != "":
+                    f.write(lineList[j]+"\n")
+            f.close()
+            break
+                    
         else:
             line_number = input_string[0]
             food_name = input_string[1]
             note = input_string[2]
-            if (str(type(line_number)) != "<class 'int'>") || (input_string[0]<0):
+            if (str(type(line_number)) != "<class 'int'>") or (input_string[0]<0):
                 print("줄번호는 조건에 맞게 0 이상 양의 정수로 입력해주세요.")
             else:
                 if (line_number >len(lineList)+1):
@@ -158,7 +165,9 @@ def editRecipe(i):
                             print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
                         else:
                             print("식품명을 조건에 맞게 입력해주세요.")
-            
+                     
+    if len(input_string)==1 :
+        return
     if line_number == len(lineList):         #마지막줄에 추가
         lineList.append(foodname+" "+note)
     else:
@@ -166,6 +175,6 @@ def editRecipe(i):
     f.close()
     f = open(RECIPE_PATH+i,'w')
     for j in range(len(lineList-1)):
-        f.write(lineList[j])
-        f.write("\n")
-    f.close
+        f.write(lineList[j]+"\n")
+    f.close()
+    return 
