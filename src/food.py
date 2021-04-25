@@ -129,6 +129,7 @@ def takingExpiration(ex_date):
         f.close()
     if count == 0:
         print("해당되는 식품이 없습니다.")
-
+    else:
+        
     
     print("식품명 / 유통기한 / 남은 일수\n")
