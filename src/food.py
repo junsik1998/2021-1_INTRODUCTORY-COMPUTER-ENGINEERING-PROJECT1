@@ -121,7 +121,7 @@ def takingExpiration(ex_date):
     file_list = glob.glob(ROOT_PATH)
     file_list_txt = [file for file in file_list if file.endswith(".txt")]
     for i in range(0, len(file_list_txt)):
-        f = open.(file_list_txt[i], 'r', encoding='utf-8') #위에서 텍스트 파일 경로들을 리스트 받아와서, 인덱스로 해당 텍스트파일들 출력하려는 의도인데, 문법적으로 틀린 것 같은데 어떻게 수정할 지 
+        f = open.(file_list_txt[i], 'r', encoding='utf-8') #위에서 텍스트 파일 경로들을 리스트 받아와서, 인덱스로 해당 텍스트파일들 출력하려는 의도인데, 문법적으로 틀린 것 같은데 어떻게 수정할 지 모르겠습니다.
         string_list = f.split(' ')
         if int(string_list[2]) > ex_date:
             food_dic[string_list[0]] = int(string_list[2])
