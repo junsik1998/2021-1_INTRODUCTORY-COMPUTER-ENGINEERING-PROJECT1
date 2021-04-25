@@ -130,6 +130,7 @@ def takingExpiration(ex_date):
     if count == 0:
         print("해당되는 식품이 없습니다.")
     else:
-        
-    
+        dic = sorted(food_dic.items(), key=lambda x:x[1])
     print("식품명 / 유통기한 / 남은 일수\n")
+     for i in dic:
+            print("\n")#
