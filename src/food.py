@@ -75,13 +75,13 @@ def foodOutput(path):
 
 
 
-def lessExpirationDate():
+def lessExpirationDate(path):
     #print("유통기한 적게 남은 식품 확인을 위한 함수")
     now = datetime.now()
     ex_date = get_date(now)
     now_date = int(now.strftime('%Y%m%d'))
     if ex_date >= now_date:
-        takingExpiration(ex_date)
+        takingExpiration(ex_date, path)
     else:
         print("이미 유통기한이 지난 식품은 확인할 수 없습니다")
         
@@ -93,11 +93,11 @@ def get_date(now):
         date = input("유통기한이 입력하신 날짜 또는 기간 이내로 남은 식품 목록을 출력해 드리기 위해서,YYYYMMDD형식의 날짜 또는 양의 정수와 기간의 단위(일, 월, 년)의 결합으로 이루어진 기간을 입력해주세요.\n\n입력 >")
         if isinstance(date, int):
             if len(date == 8):
-                return date
+                return int(date)
             else:
                 print("입력형식에 맞지 않습니다.")
                 continue
-        elif isinstance(date, string):
+        else:
             n = len(date)
             num = int(date[0:n-1])
             kind = date[n-1:n]
@@ -110,20 +110,20 @@ def get_date(now):
             else:
                 print("입력형식에 맞지 않습니다.")
                 continue
-            wanted_date.strftime('%Y%m%d')
-            return int(wanted_date)
+            return int(wanted_date.strftime('%Y%m%d'))
         
         
 #유통기한 검사해서 가져오는 함수        
-def takingExpiration(ex_date):
+def takingExpiration(ex_date, path):
     count = 0
     food_dic ={}
-    file_list = glob.glob(ROOT_PATH)
+    file_list = os.listdir("./refrigerator/"+path)
     file_list_txt = [file for file in file_list if file.endswith(".txt")]
-    for i in range(0, len(file_list_txt)):
-        f = open.(file_list_txt[i], 'r', encoding='utf-8') #위에서 텍스트 파일 경로들을 리스트 받아와서, 인덱스로 해당 텍스트파일들 출력하려는 의도인데, 문법적으로 틀린 것 같은데 어떻게 수정할 지 모르겠습니다.
-        string_list = f.split(' ')
-        if int(string_list[2]) > ex_date:
+    for i in file_list_txt:
+        f = open("./refrigerator/"+path+"/"+i,'r',encoding='utf-8')
+        line = f.readline()
+        string_list = line.split(' ')
+        if int(string_list[2]) < ex_date:
             food_dic[string_list[0]] = int(string_list[2])
             count+=1
         f.close()
@@ -131,6 +131,6 @@ def takingExpiration(ex_date):
         print("해당되는 식품이 없습니다.")
     else:
         dic = sorted(food_dic.items(), key=lambda x:x[1])
-    print("식품명 / 유통기한 / 남은 일수\n")
-     for i in dic:
-            print("\n")#
+        print("식품명 / 유통기한 / 남은 일수\n")
+        for i in dic:
+            print(i)

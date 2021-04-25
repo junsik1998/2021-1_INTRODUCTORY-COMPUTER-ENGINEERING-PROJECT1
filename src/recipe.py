@@ -115,12 +115,12 @@ def editRecipe(i):
     lineList = f.readlines()
     print("수정 값(수정할 줄번호, 식품명, 메모)")
     print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
-    while true:      
+    while True:      
         input_text = input("입력>")
         input_string = input_text.split()
         if len(input_string) != 3 or len(input_string) != 1:
             print("공백을 기준으로 조건에 맞게 3가지 요소를 입력하세요.")
-        else if len(input_string) == 1:        #줄 번호만 입력: 해당 줄 삭제
+        elif len(input_string) == 1:        #줄 번호만 입력: 해당 줄 삭제
             line_number = input_string[0]
             lineList[line_number-1] = ""
             f.close()

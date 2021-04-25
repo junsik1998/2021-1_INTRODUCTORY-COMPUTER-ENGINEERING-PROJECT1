@@ -59,7 +59,7 @@ if __name__ == "__main__":
         if menu == 4:
             showALLFood(refrigerator)
         if menu == 5:
-            lessExpirationDate()
+            lessExpirationDate(refrigerator)
         if menu == 6:
             addRecipe()
         if menu == 7:

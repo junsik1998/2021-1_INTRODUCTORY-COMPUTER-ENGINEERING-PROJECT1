@@ -2,7 +2,7 @@ import os
 import time
 from inputCheck import inputRecipeName, inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, stringCompare
 from recipe import showRecipeDetail, removeRecipe, editRecipe
-from menu import menuSelect
+from menu import menuSelect, SEARCH_MENU_LIST
 from showList import showRecipeList
 
 #폴더 경로들 (상수 취급하여 코딩해 주세요.)
