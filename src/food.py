@@ -1,6 +1,7 @@
 import time
 import string
 import os
+import glob
 from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, matchFoodAmount
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -114,5 +115,20 @@ def get_date(now):
         
         
 #유통기한 검사해서 가져오는 함수        
-def takingExpiration(wedate):
-    pass
+def takingExpiration(ex_date):
+    count = 0
+    food_dic ={}
+    file_list = glob.glob(ROOT_PATH)
+    file_list_txt = [file for file in file_list if file.endswith(".txt")]
+    for i in range(0, len(file_list_txt)):
+        f = open.(file_list_txt[i], 'r', encoding='utf-8')
+        string_list = f.split(' ')
+        if int(string_list[2]) > ex_date:
+            food_dic[string_list[0]] = int(string_list[2])
+            count+=1
+        f.close()
+    if count == 0:
+        print("해당되는 식품이 없습니다.")
+
+    
+    print("식품명 / 유통기한 / 남은 일수\n")
