@@ -117,6 +117,7 @@ def get_date(now):
 def takingExpiration(ex_date, path):
     count = 0
     food_dic ={}
+    left_day = []
     file_list = os.listdir("./refrigerator/"+path)
     file_list_txt = [file for file in file_list if file.endswith(".txt")]
     for i in file_list_txt:
@@ -131,6 +132,8 @@ def takingExpiration(ex_date, path):
         print("해당되는 식품이 없습니다.")
     else:
         dic = sorted(food_dic.items(), key=lambda x:x[1])
+        for key, value in some_dict.items():
+            left_day.append(datetime(value[0:4], value[4:6], value[6:8]) - now[0:8])
         print("식품명 / 유통기한 / 남은 일수\n")
-        for i in dic:
-            print(i)
+        for i in range(0,count):
+        pritnf(dic[i], left_day[i],"\n")
