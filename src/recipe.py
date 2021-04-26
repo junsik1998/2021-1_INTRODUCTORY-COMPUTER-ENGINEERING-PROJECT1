@@ -16,7 +16,7 @@ def addRecipe ():
             print("이미 등록된 요리입니다.")
         else:
             break
-    f = open(RECIPE_PATH+recipe+'.txt', 'w')
+    f = open(RECIPE_PATH+recipe+'.txt', 'w', encoding='utf-8')
     print("요리에 필요한 재료들의 식품명과 메모의 쌍을 공백을 기준으로 식품명과 메모를 구분하여 한 쌍을 한 줄씩 입력해 주세요.")
     print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
     while True:
@@ -110,7 +110,7 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):
-    f = open(RECIPE_PATH+i,'r')
+    f = open(RECIPE_PATH+i,'r', encoding='utf-8')
     lineList = f.readlines()
     for k in range(len(lineList)+1):
         n = str(k)
@@ -176,7 +176,7 @@ def editRecipe(i):
     else:
         lineList[line_number] = (food_name+" "+note+"\n")        #선택한 줄 수정
     f.close()
-    f = open(RECIPE_PATH+i,'w')
+    f = open(RECIPE_PATH+i,'w', encoding='utf-8')
     for j in range(len(lineList)):
         f.write(lineList[j])
     f.close()
