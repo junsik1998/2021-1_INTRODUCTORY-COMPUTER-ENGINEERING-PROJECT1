@@ -12,7 +12,7 @@ def addRecipe ():
     current_recipe_list = os.listdir(RECIPE_PATH)
     while True:
         recipe = inputRecipeName()
-        if recipe in current_recipe_list:
+        if (recipe+".txt") in current_recipe_list:
             print("이미 등록된 요리입니다.")
         else:
             break
@@ -26,6 +26,7 @@ def addRecipe ():
             return 0
         else:
             f.write(food_note)
+            f.write("\n")
 
 
 def cooking(path):     
