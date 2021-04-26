@@ -139,4 +139,4 @@ def takingExpiration(ex_date, path, now):
         print("식품명 / 유통기한 / 남은 일수\n")
         print_list = list(zip(dic.keys(), dic.values()))
         for i in range(0,count):
-            print(print_list[i][0], '/', print_list[i][1], '/', left_day[i],"\n") #수정필요
+            print(print_list[i][0], '/', print_list[i][1], '/', left_day[i],"\n") 
