@@ -73,7 +73,7 @@ def searchFood(path):
 
 def searchRecipe():
     current_recipe_list = os.listdir(RECIPE_PATH)
-    search_recipe_list = []
+    search_recipe_list = ["메인 메뉴로 돌아가기"]
     print("검색할 요리이름을 입력하세요")
     recipe = inputRecipeName()
     for i in current_recipe_list:
