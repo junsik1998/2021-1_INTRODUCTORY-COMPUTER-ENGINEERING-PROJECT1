@@ -110,7 +110,7 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):
-    f = open(RECIPE_PATH+i,'r', encoding='utf-8')
+    f = open(RECIPE_PATH+i,'r')
     lineList = f.readlines()
     for k in range(len(lineList)+1):
         n = str(k)
@@ -157,7 +157,19 @@ def editRecipe(i):
                         check_text += temp
                     if note == check_text and len(note) >= 1 and len(note) <= 10:
                         note = check_text
-                        break        #검사완료
+                        if len(input_string)==0:
+                            return
+                        if line_number == len(lineList):         #마지막줄에 추가
+                            lineList.append(food_name+" "+note+"\n")
+                        else:
+                            lineList[line_number] = (food_name+" "+note+"\n")        #선택한 줄 수정
+                        f.close()
+                        f = open(RECIPE_PATH+i,'w')
+                        for j in range(len(lineList)):
+                            f.write(lineList[j])
+                        f.close()
+                        continue
+
                     else:
                         if len(note) < 1 or len(note) > 10:
                             print("메모는 1글자 이상 10글자 이하로 입력해주세요.")
@@ -169,15 +181,4 @@ def editRecipe(i):
                     else:
                         print("식품명을 조건에 맞게 입력해주세요.")
 
-    if len(input_string)==0:
-        return
-    if line_number == len(lineList):         #마지막줄에 추가
-        lineList.append(food_name+" "+note+"\n")
-    else:
-        lineList[line_number] = (food_name+" "+note+"\n")        #선택한 줄 수정
-    f.close()
-    f = open(RECIPE_PATH+i,'w', encoding='utf-8')
-    for j in range(len(lineList)):
-        f.write(lineList[j])
-    f.close()
-    return
+
