@@ -164,7 +164,7 @@ def editRecipe(i):
                         else:
                             lineList[line_number] = (food_name+" "+note+"\n")        #선택한 줄 수정
                         f.close()
-                        f = open(RECIPE_PATH+i,'w')
+                        f = open(RECIPE_PATH+i,'w',encoding='utf-8')
                         for j in range(len(lineList)):
                             f.write(lineList[j])
                         f.close()
