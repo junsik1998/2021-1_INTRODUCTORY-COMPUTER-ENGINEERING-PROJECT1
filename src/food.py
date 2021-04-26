@@ -81,7 +81,7 @@ def lessExpirationDate(path):
     ex_date = get_date(now)
     now_date = int(now.strftime('%Y%m%d'))
     if ex_date >= now_date:
-        takingExpiration(ex_date, path)
+        takingExpiration(ex_date, path, now)
     else:
         print("이미 유통기한이 지난 식품은 확인할 수 없습니다")
         
@@ -114,7 +114,7 @@ def get_date(now):
         
         
 #유통기한 검사해서 가져오는 함수        
-def takingExpiration(ex_date, path):
+def takingExpiration(ex_date, path, now):
     count = 0
     food_dic ={}
     left_day = []
@@ -132,8 +132,8 @@ def takingExpiration(ex_date, path):
         print("해당되는 식품이 없습니다.")
     else:
         dic = sorted(food_dic.items(), key=lambda x:x[1])
-        for key, value in some_dict.items():
+        for key, value in dic.items():
             left_day.append(datetime(value[0:4], value[4:6], value[6:8]) - now[0:8])
         print("식품명 / 유통기한 / 남은 일수\n")
         for i in range(0,count):
-        pritnf(dic[i], left_day[i],"\n")
+            print(dic[i], '/', left_day[i],"\n") #수정필요
