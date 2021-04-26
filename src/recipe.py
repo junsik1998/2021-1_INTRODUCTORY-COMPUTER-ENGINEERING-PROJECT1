@@ -112,17 +112,27 @@ def removeRecipe(i):
 def editRecipe(i):
     f = open(RECIPE_PATH+i,'r')
     lineList = f.readlines()
-    for k in range(len(lineList)):
-        n = str(k+1)
-        print(n+" "+lineList[k])
+    for k in range(len(lineList)+1):
+        n = str(k)
+        if k<len(lineList):
+            print(n+" "+lineList[k])
+        else :
+            print(n+" "+"식품 추가")
+    
         
     print("수정 값(수정할 줄번호, 식품명, 메모)")
     print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
     while True:      
         input_text = input("입력>")
         input_string = input_text.split()
-        if len(input_string) != 3:
+        if len(input_string) != 3 and len(input_string) != 0:
             print("공백을 기준으로 조건에 맞게 3가지 요소를 입력하세요.")
+        elif len(input_string) == 0:
+            for k in range(len(lineList)+1):
+                n = str(k)
+                if k<len(lineList):
+                    print(n+" "+lineList[k])
+            break
             
         else:
             try :
@@ -132,7 +142,7 @@ def editRecipe(i):
             except:
                 print("줄번호는 조건에 맞게 0 이상 양의 정수로 입력해주세요.")
                 continue
-            if (line_number >(len(lineList)+1) or line_number <= 0):
+            if (line_number >(len(lineList)+1) or line_number < 0):
                 print("줄번호는 식품명과 메모가 쓰인 줄 또는 마지막 줄 바로 다음 줄로 입력해주세요.")
             else: 
                 check_text = ''
@@ -158,11 +168,13 @@ def editRecipe(i):
                         print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
                     else:
                         print("식품명을 조건에 맞게 입력해주세요.")
-                     
-    if line_number == len(lineList)+1:         #마지막줄에 추가
+
+    if len(input_string)==0:
+        return
+    if line_number == len(lineList):         #마지막줄에 추가
         lineList.append(food_name+" "+note+"\n")
     else:
-        lineList[line_number-1] = (food_name+" "+note+"\n")        #선택한 줄 수정
+        lineList[line_number] = (food_name+" "+note+"\n")        #선택한 줄 수정
     f.close()
     f = open(RECIPE_PATH+i,'w')
     for j in range(len(lineList)):
