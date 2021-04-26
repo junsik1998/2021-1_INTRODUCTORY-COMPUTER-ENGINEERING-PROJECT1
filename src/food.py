@@ -132,8 +132,11 @@ def takingExpiration(ex_date, path, now):
         print("해당되는 식품이 없습니다.")
     else:
         dic = sorted(food_dic.items(), key=lambda x:x[1])
+        dic = dict(dic)
         for key, value in dic.items():
-            left_day.append(datetime(value[0:4], value[4:6], value[6:8]) - now[0:8])
+            value = str(value)
+            left_day.append((datetime(int(value[0:4]), int(value[4:6]), int(value[6:8])).date() - now.date()).days)
         print("식품명 / 유통기한 / 남은 일수\n")
+        print_list = list(zip(dic.keys(), dic.values()))
         for i in range(0,count):
-            print(dic[i], '/', left_day[i],"\n") #수정필요
+            print(print_list[i][0], '/', print_list[i][1], '/', left_day[i],"\n") #수정필요
