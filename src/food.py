@@ -103,11 +103,13 @@ def get_date(now):
                     wanted_date = now + relativedelta(months=num)
                 else:
                     print("기간의 단위가 '달'인 경우 1이상 100이하의 정수만 입력 가능합니다.")
+                    continue
             elif kind == "년":
                 if num >= 1 and num <= 10:
                     wanted_date = now + relativedelta(years=num)
                 else:
                     print("기간의 단위가 '년'인 경우 1이상 10이하의 정수만 입력 가능합니다.")
+                    continue
             else:
                 print("입력형식에 맞지 않습니다.")
                 continue
