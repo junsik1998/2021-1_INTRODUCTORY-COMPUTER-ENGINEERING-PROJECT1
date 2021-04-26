@@ -79,9 +79,9 @@ def searchRecipe():
     for i in current_recipe_list:
         val=i.find(recipe)
         if val!= (-1):
-            search_recipe_list.append(i)
+            search_recipe_list.append(i[:-4])
     
-    if len(search_recipe_list) == 0:
+    if len(search_recipe_list) == 1:
         print("검색 결과가 없습니다.")
         return 0
     
@@ -98,6 +98,5 @@ def searchRecipe():
                 editRecipe(recipeName_txt)
             else:
                 removeRecipe(recipeName_txt)
-                tmp = recipeName_txt[:-4]               
-                possible_recipe_select_menu_list.remove(tmp)        #리스트에 반영
                 break
+    return
