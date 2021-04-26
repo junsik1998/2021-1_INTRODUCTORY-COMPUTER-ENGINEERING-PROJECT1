@@ -111,24 +111,18 @@ def removeRecipe(i):
 def editRecipe(i):
     f = open(RECIPE_PATH+i,'r',encoding='utf-8')
     lineList = f.readlines()
+    for k in range(len(lineList)):
+        n = str(k+1)
+        print(n+" "+lineList[k])
+        
     print("수정 값(수정할 줄번호, 식품명, 메모)")
     print("모든 입력이 끝났으면 엔터를 한번 더 입력하세요.")
     while True:      
         input_text = input("입력>")
         input_string = input_text.split()
-        if len(input_string) != 3 or len(input_string) != 1:
+        if len(input_string) != 3:
             print("공백을 기준으로 조건에 맞게 3가지 요소를 입력하세요.")
-        elif len(input_string) == 1:        #줄 번호만 입력: 해당 줄 삭제
-            line_number = input_string[0]
-            lineList[line_number-1] = ""
-            f.close()
-            f = open(RECIPE_PATH+i,'w')
-            for j in range(len(lineList)):
-                if lineList[j] != "":
-                    f.write(lineList[j]+"\n")
-            f.close()
-            break
-                    
+            
         else:
             line_number = input_string[0]
             food_name = input_string[1]
