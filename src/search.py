@@ -98,5 +98,7 @@ def searchRecipe():
                 editRecipe(recipeName_txt)
             else:
                 removeRecipe(recipeName_txt)
+                tmp = recipeName_txt[:-4]               
+                search_recipe_list.remove(tmp)
                 break
     return
