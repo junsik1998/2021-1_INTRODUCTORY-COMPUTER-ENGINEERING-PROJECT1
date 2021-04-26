@@ -109,7 +109,6 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):
-    file_list = os.listdir(RECIPE_PATH)
     f = open(RECIPE_PATH+i,'r',encoding='utf-8')
     lineList = f.readlines()
     print("수정 값(수정할 줄번호, 식품명, 메모)")
@@ -154,11 +153,11 @@ def editRecipe(i):
                             if note == check_text and len(note) >= 1 and len(note) <= 10:
                                 note = check_text
                                 break        #검사완료
-                        else:
-                            if len(note) < 1 or len(note) > 10:
-                                print("메모는 1글자 이상 10글자 이하로 입력해주세요.")
                             else:
-                                print("메모를 조건에 맞게 입력해주세요.")
+                                if len(note) < 1 or len(note) > 10:
+                                    print("메모는 1글자 이상 10글자 이하로 입력해주세요.")
+                                else:
+                                    print("메모를 조건에 맞게 입력해주세요.")
                     else:
                         if len(input_text) < 1 or len(input_text) > 20:
                             print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
