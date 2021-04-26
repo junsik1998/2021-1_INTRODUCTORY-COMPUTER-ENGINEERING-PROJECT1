@@ -66,31 +66,31 @@ def inputFoodAmount(input_text):
     try:
         if re.compile('mL$').search(input_text):
             amount_num = int(input_text.replace('mL','',1))
-            if inputInt2(amount_num,1,9999999999,"식품의 양은 단위가 있는 "):
+            if inputInt2(amount_num,1,10000,"식품의 양은 단위가 있는 "):
                 return True
             else:
                 return False
         elif re.compile('kg$').search(input_text):
             amount_num = int(input_text.replace('kg','',1))
-            if inputInt2(amount_num,1,9999999999,"식품의 양은 단위가 있는 "):
+            if inputInt2(amount_num,1,10000,"식품의 양은 단위가 있는 "):
                 return True
             else:
                 return False
         elif re.compile('g$').search(input_text):
             amount_num = int(input_text.replace('g','',1))
-            if inputInt2(amount_num,1,9999999999,"식품의 양은 단위가 있는 "):
+            if inputInt2(amount_num,1,10000,"식품의 양은 단위가 있는 "):
                 return True
             else:
                 return False
         elif re.compile('L$').search(input_text):
             amount_num = int(input_text.replace('L','',1))
-            if inputInt2(amount_num,1,9999999999,"식품의 양은 단위가 있는 "):
+            if inputInt2(amount_num,1,10000,"식품의 양은 단위가 있는 "):
                 return True
             else:
                 return False
         elif re.compile('인분$').search(input_text):
             amount_num = int(input_text.replace('인분','',1))
-            if inputInt2(amount_num,1,9999999999,"식품의 양은 단위가 있는 "):
+            if inputInt2(amount_num,1,10000,"식품의 양은 단위가 있는 "):
                 return True
             else:
                 return False
@@ -118,6 +118,38 @@ def inputFoodExpiration(num):
     else:
         print("식품의 유통기한은 8자리 정수로만 입력해주세요.")
         return False
+
+
+def isYYYYMMDD(input_string):
+    if len(input_string) == 8:
+        find_text = re.search('[^0-9]', input_string)
+        if find_text == None:
+            now = time.strftime('%Y%m%d',time.localtime())
+            year = int(input_string[:4])
+            month = int(input_string[4:6])
+            day = int(input_string[6:])
+            try:
+                datetime(year, month, day)
+                if int(now) <= int(input_string):
+                    return True
+                else:
+                    print("오늘 날짜 기준 오늘 또는 다음 날짜를 입력해주세요.")
+                    return False
+            except:
+                print("해당 날짜는 유효하지 않는 날짜 입니다. 확인 후 다시 입력해주세요.")
+                return False
+        else:
+            return False
+    else:
+        return False
+
+def isAllInt(input_string):
+    find_text = re.search('[^0-9]', input_string)
+    if len(input_string) > 0 and find_text == None:
+        return True
+    else:
+        return False
+
 
 def matchFoodAmount(foodIn,foodOut):
     try:
@@ -161,16 +193,16 @@ def inputRecipeName():
     while True:
         input_text = input("요리 이름 > ")
         check_text = ''
-        find_text = re.findall(r'[가-힣a-z0-9_]+', input_text)
+        find_text = re.findall(r'[가-힣A-z0-9_]+', input_text)
         for temp in find_text:
             check_text += temp
-        if input_text == check_text and len(input_text) >= 1 and len(input_text) <= 20:
+        if input_text == check_text and len(input_text) >= 1 and len(input_text) <= 30:
             return check_text
         else:
             if len(input_text) < 1 or len(input_text) > 30:
                 print("1글자 이상 30글자 이하로 입력해주세요.")
             else:
-                print("한글, 영문 소문자, 숫자, 밑줄 문자(_)만 입력 가능합니다.")
+                print("한글, 영문 대소문자, 숫자, 밑줄 문자(_)만 입력 가능합니다.")
     
 def inputFoodNote():
     while True:
@@ -183,14 +215,14 @@ def inputFoodNote():
             note = input_string[1]
             check_text1 = ''
             check_text2 = ''
-            find_text1 = re.findall(r'[가-힣a-z0-9_]+', food_name)
-            find_text2 = re.findall(r'[가-힣a-z0-9_]+', note)
+            find_text1 = re.findall(r'[가-힣A-z0-9_()]+', food_name)
+            find_text2 = re.findall(r'[가-힣A-z0-9_()]+', note)
             for temp1 in find_text1:
                 check_text1 += temp1
             if food_name == check_text1 and len(food_name) >= 1 and len(food_name) <= 20:
                 for temp2 in find_text2:
                     check_text2 += temp2
-                if note == check_text2 and len(note) >= 1 and len(note) <= 20:
+                if note == check_text2 and len(note) >= 1 and len(note) <= 10:
                     return (check_text1+' '+check_text2)
                 else:
                     print("입력하신 값이 문법 형식에 맞지 않습니다.")

@@ -2,7 +2,7 @@ import time
 import string
 import os
 import glob
-from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, matchFoodAmount
+from inputCheck import inputFoodName, checkListNum, inputFoodAmount, inputFoodExpiration, matchFoodAmount, isYYYYMMDD, isAllInt
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -79,38 +79,41 @@ def lessExpirationDate(path):
     #print("유통기한 적게 남은 식품 확인을 위한 함수")
     now = datetime.now()
     ex_date = get_date(now)
-    now_date = int(now.strftime('%Y%m%d'))
-    if ex_date >= now_date:
-        takingExpiration(ex_date, path, now)
-    else:
-        print("이미 유통기한이 지난 식품은 확인할 수 없습니다")
+    takingExpiration(ex_date, path, now)
         
         
 #유통기한 입력받는 함수        
 def get_date(now):
     while(True):
-        print("================")
-        date = input("유통기한이 입력하신 날짜 또는 기간 이내로 남은 식품 목록을 출력해 드리기 위해서,YYYYMMDD형식의 날짜 또는 양의 정수와 기간의 단위(일, 월, 년)의 결합으로 이루어진 기간을 입력해주세요.\n\n입력 >")
-        if isinstance(date, int):
-            if len(date == 8):
-                return int(date)
-            else:
-                print("입력형식에 맞지 않습니다.")
-                continue
-        else:
-            n = len(date)
-            num = int(date[0:n-1])
-            kind = date[n-1:n]
+        print("유통기한이 입력하신 날짜 또는 기간 이내로 남은 식품 목록을 출력해 드리기 위해서,YYYYMMDD형식의 날짜 또는 양의 정수와 기간의 단위(일, 달, 년)의 결합으로 이루어진 기간을 입력해주세요.")
+        date = input("입력 >")
+        if isYYYYMMDD(date):
+            return int(date)
+        elif isAllInt(date[:-1]):
+            num = int(date[:-1])
+            kind = date[-1]
             if kind == "일":
-                wanted_date = now + timedelta(days=num)
-            elif kind == "월":
-                wanted_date = now + relativedelta(months=num)
+                if num >= 1 and num <= 1000:
+                    wanted_date = now + timedelta(days=num)
+                else:
+                    print("기간의 단위가 '일'인 경우 1이상 1000이하의 정수만 입력 가능합니다.")
+                    continue
+            elif kind == "달":
+                if num >= 1 and num <= 100:
+                    wanted_date = now + relativedelta(months=num)
+                else:
+                    print("기간의 단위가 '달'인 경우 1이상 100이하의 정수만 입력 가능합니다.")
             elif kind == "년":
-                wanted_date = now + relativedelta(years=num)
+                if num >= 1 and num <= 10:
+                    wanted_date = now + relativedelta(years=num)
+                else:
+                    print("기간의 단위가 '년'인 경우 1이상 10이하의 정수만 입력 가능합니다.")
             else:
                 print("입력형식에 맞지 않습니다.")
                 continue
             return int(wanted_date.strftime('%Y%m%d'))
+        else:
+            print("입력형식에 맞지 않습니다.")
         
         
 #유통기한 검사해서 가져오는 함수        

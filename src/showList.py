@@ -18,7 +18,7 @@ def showALLFood(path):
     index_list=[]
     real_list=[]
 
-    print("정렬기준과 오름/내림차순을 공백을 기준으로 입력하시오.")
+    print("정렬기준(식품명, 식품생성날짜, 유통기한)과 오름차순/내림차순을 공백을 기준으로 입력하시오.")
     while(True):
         string=input("입력> ")
         input_condition=string.split()
@@ -40,8 +40,10 @@ def showALLFood(path):
             real_list.append([buf[0],buf[2],i])
             f.close()
 
-        if input_condition[0]=="식품명":
+        if input_condition[0]=="식품명" and input_condition[1]=='오름차순':
             real_list.sort()
+        if input_condition[0]=="식품명" and input_condition[1]=='내림차순':
+            real_list.sort(reverse=True)
         if input_condition[0]=="유통기한"and input_condition[1]=='오름차순':
             real_list.sort(key=lambda x : x[1])
         if input_condition[0]=="유통기한"and input_condition[1]=='내림차순':

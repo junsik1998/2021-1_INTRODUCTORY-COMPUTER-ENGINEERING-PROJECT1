@@ -25,7 +25,7 @@ def selectRefrigerator(): #냉장고 선택 함수
         while True:
             refrigerator = inputRefrigerarorName()
             if refrigerator in current_refrigerator_list:
-                print("냉장고 이름 중복")
+                print("중복되는 냉장고 이름이 있습니다. 다른 이름을 입력해 주세요.")
             else:
                 break
         os.mkdir(REFRIGERATOR_PATH+refrigerator) #냉장고 이름의 폴더 생성
