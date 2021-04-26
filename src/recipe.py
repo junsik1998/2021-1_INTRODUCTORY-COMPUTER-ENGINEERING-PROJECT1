@@ -44,7 +44,7 @@ def cooking(path):
         foodList = [0 for j in range(len(lineList))]    #요리에 필요한 식재료의 이름 , 줄 수 만큼 0으로 초기화
         checkList = [False for j in range(len(lineList))]   #식재료 체크 , 줄 수 만큼 false로 초기화
         f.close()
-        for j in len(lineList):    
+        for j in range(len(lineList)):    
             buf = lineList[j].split()
             foodList[j] = buf[0]                        #식재료 이름
 
