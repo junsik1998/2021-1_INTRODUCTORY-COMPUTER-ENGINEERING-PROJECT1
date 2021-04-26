@@ -109,7 +109,7 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):
-    f = open(RECIPE_PATH+i,'r',encoding='utf-8')
+    f = open(RECIPE_PATH+i,'r')
     lineList = f.readlines()
     for k in range(len(lineList)):
         n = str(k+1)
@@ -124,49 +124,47 @@ def editRecipe(i):
             print("공백을 기준으로 조건에 맞게 3가지 요소를 입력하세요.")
             
         else:
-            line_number = input_string[0]
-            food_name = input_string[1]
-            note = input_string[2]
-            if (str(type(line_number)) != "<class 'int'>") or (input_string[0]<0):
+            try :
+                line_number = int(input_string[0])
+                food_name = input_string[1]
+                note = input_string[2]
+            except:
                 print("줄번호는 조건에 맞게 0 이상 양의 정수로 입력해주세요.")
-            else:
-                if (line_number >len(lineList)+1):
-                    print("줄번호는 식품명과 메모가 쓰인 줄 또는 마지막 줄 바로 다음 줄로 입력해주세요.")
-                else: 
+                continue
+            if (line_number >(len(lineList)+1) or line_number <= 0):
+                print("줄번호는 식품명과 메모가 쓰인 줄 또는 마지막 줄 바로 다음 줄로 입력해주세요.")
+            else: 
+                check_text = ''
+                find_text = re.findall(r'[가-힣a-z0-9_]+', food_name)
+                for temp in find_text:
+                    check_text += temp
+                if food_name == check_text and len(food_name) >= 1 and len(food_name) <= 20:
+                    food_name = check_text
                     check_text = ''
-                    find_text = re.findall(r'[가-힣a-z0-9_]+', food_name)
+                    find_text = re.findall(r'[가-힣a-z0-9_]+', note)
                     for temp in find_text:
                         check_text += temp
-                    if food_name == check_text and len(food_name) >= 1 and len(food_name) <= 20:
-                        food_name = check_text
-                        
-                        check_text = ''
-                        find_text = re.findall(r'[가-힣a-z0-9_]+', note)
-                        for temp in find_text:
-                            check_text += temp
-                            if note == check_text and len(note) >= 1 and len(note) <= 10:
-                                note = check_text
-                                break        #검사완료
-                            else:
-                                if len(note) < 1 or len(note) > 10:
-                                    print("메모는 1글자 이상 10글자 이하로 입력해주세요.")
-                                else:
-                                    print("메모를 조건에 맞게 입력해주세요.")
+                    if note == check_text and len(note) >= 1 and len(note) <= 10:
+                        note = check_text
+                        break        #검사완료
                     else:
-                        if len(input_text) < 1 or len(input_text) > 20:
-                            print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
+                        if len(note) < 1 or len(note) > 10:
+                            print("메모는 1글자 이상 10글자 이하로 입력해주세요.")
                         else:
-                            print("식품명을 조건에 맞게 입력해주세요.")
+                            print("메모를 조건에 맞게 입력해주세요.")
+                else:
+                    if len(input_text) < 1 or len(input_text) > 20:
+                        print("식품명은 1글자 이상 20글자 이하로 입력해주세요.")
+                    else:
+                        print("식품명을 조건에 맞게 입력해주세요.")
                      
-    if len(input_string)==1 :
-        return
-    if line_number == len(lineList):         #마지막줄에 추가
-        lineList.append(food_name+" "+note)
+    if line_number == len(lineList)+1:         #마지막줄에 추가
+        lineList.append(food_name+" "+note+"\n")
     else:
-        lineList[line_number-1] = (food_name+" "+note)        #선택한 줄 수정
+        lineList[line_number-1] = (food_name+" "+note+"\n")        #선택한 줄 수정
     f.close()
     f = open(RECIPE_PATH+i,'w')
-    for j in range(len(lineList-1)):
-        f.write(lineList[j]+"\n")
+    for j in range(len(lineList)):
+        f.write(lineList[j])
     f.close()
-    return 
+    return
