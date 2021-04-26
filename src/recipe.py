@@ -110,7 +110,7 @@ def removeRecipe(i):
     print("레시피 삭제됨")
 
 def editRecipe(i):
-    f = open(RECIPE_PATH+i,'r')
+    f = open(RECIPE_PATH+i,'r',encoding='utf-8')
     lineList = f.readlines()
     for k in range(len(lineList)+1):
         n = str(k)
