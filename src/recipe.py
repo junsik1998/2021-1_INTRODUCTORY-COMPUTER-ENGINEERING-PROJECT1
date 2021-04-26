@@ -110,7 +110,6 @@ def removeRecipe(i):
 
 def editRecipe(i):
     file_list = os.listdir(RECIPE_PATH)
-    file_list_txt = [file for file in file_list if file.endswith(".txt")]
     f = open(RECIPE_PATH+i,'r',encoding='utf-8')
     lineList = f.readlines()
     print("수정 값(수정할 줄번호, 식품명, 메모)")
@@ -169,9 +168,9 @@ def editRecipe(i):
     if len(input_string)==1 :
         return
     if line_number == len(lineList):         #마지막줄에 추가
-        lineList.append(foodname+" "+note)
+        lineList.append(food_name+" "+note)
     else:
-        lineList[line_number-1] = (foodname+" "+note)        #선택한 줄 수정
+        lineList[line_number-1] = (food_name+" "+note)        #선택한 줄 수정
     f.close()
     f = open(RECIPE_PATH+i,'w')
     for j in range(len(lineList-1)):
